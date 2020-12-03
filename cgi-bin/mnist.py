@@ -17,7 +17,8 @@ import torchvision
 # Default output
 res = {"result": 0,
        "data": [], 
-       "error": ''}
+       "error": '',
+       "output": ''}
 
 try:
   # Get post data
@@ -33,7 +34,8 @@ try:
     
     # Normalize and invert pixel values
     arr = (255 - arr) / 255.
-    
+    arr[arr == 0.] = -1.
+
     # Load trained model
     model = torch.load('/home/crow/handwritten-digit/models/my_mnist_model.pt')
     model.double()
@@ -49,6 +51,7 @@ try:
 
     res['result'] = 1
     res['data'] = probab
+    res['output'] = str(arr.numpy())
 
 except Exception as e:
   # Return error data

@@ -34,6 +34,7 @@ $("#predict").click(function(){
         $("#status").removeClass().toggleClass("fa fa-check");
         $('#svg-chart').show();
         updateChart(json.data);
+        console.log(json.output);
       } else {
          $("#status").removeClass().toggleClass("fa fa-exclamation-triangle");
          console.log('Script Error: ' + json.error)
