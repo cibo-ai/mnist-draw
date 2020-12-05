@@ -21,11 +21,6 @@ res = {"result": 0,
        "error": '',
        "output": ''}
 
-# Load the model
-model = torch.load('/home/crow/handwritten-digit/models/my_mnist_model.pt')
-# Change the model to double type because arr is double for some reason
-model.double()
-
 try:
   # Get post data
   if os.environ["REQUEST_METHOD"] == "POST":
@@ -41,7 +36,15 @@ try:
     arr = -1. + (255. - arr)*2 / 255.
 
     # transform numpy array into a tensor
-    arr = torch.from_numpy(arr).view(1, 784)
+    arr = torch.from_numpy(arr)
+    arr = torch.reshape(arr, (1, 28, 28))
+    arr = arr.unsqueeze(0)
+
+    # Load the model
+    model = torch.load('/home/crow/handwritten-digit/models/conv2d_model.pt')
+    model.eval()
+    # Change the model to double type because arr is double for some reason
+    model.double()
 
     # get the prediction from the model
     with torch.no_grad():
@@ -55,7 +58,7 @@ try:
     res['data'] = probab
     
     # output to the browser dev console for debugging
-    res['output'] = str(arr)
+    res['output'] = 'debug text'
 
 except Exception as e:
   # Return error data
