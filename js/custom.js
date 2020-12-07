@@ -1,7 +1,7 @@
 // Canvas setup
 var canvas = new fabric.Canvas('canvas');
 canvas.isDrawingMode = true;
-canvas.freeDrawingBrush.width = 20;
+canvas.freeDrawingBrush.width = 30;
 canvas.freeDrawingBrush.color = "#000000";
 canvas.backgroundColor = "#ffffff";
 canvas.renderAll();
